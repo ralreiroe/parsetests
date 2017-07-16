@@ -1,4 +1,4 @@
-package example
+package p140717
 
 object Hello extends Greeting with App {
   println(greeting)

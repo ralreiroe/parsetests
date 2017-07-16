@@ -1,4 +1,4 @@
-package example
+package p140717
 
 import org.scalatest._
 import play.api.libs.json._
