@@ -3,7 +3,7 @@ package example
 import org.scalatest._
 import play.api.libs.json._
 
-/** Like FieldValueRawSpec but no going further to FieldValue */
+/** Like FieldValueRawSpec but no going further to FieldValue: see line 123 */
 class FieldValueSpec extends FlatSpec with Matchers {
   "json" should "parse into FieldValue" in {
 
