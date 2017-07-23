@@ -1,4 +1,4 @@
-package p140717
+package p150717
 
 import org.scalatest._
 import play.api.libs.json._
@@ -101,17 +101,7 @@ class FieldValueRawSpec extends FlatSpec with Matchers {
                               submitMode: Option[String] = None,
                               choices: Option[List[String]] = None,
                               fields: Option[List[FieldValueRaw]] = None,
-                              mandatory: Option[String] = None,
-                              multivalue: Option[String] = None,
-                              total: Option[String] = None,
-                              international: Option[String] = None,
-                              infoText: Option[String] = None,
-                              infoType: Option[String] = None,
-                              shortName: Option[String] = None,
-                              repeatsMax: Option[Int] = None,
-                              repeatsMin: Option[Int] = None,
-                              repeatLabel: Option[String] = None,
-                              repeatAddAnotherText: Option[String] = None
+                              mandatory: Option[String] = None
                             )
 
 
@@ -128,17 +118,7 @@ class FieldValueRawSpec extends FlatSpec with Matchers {
           (__ \ 'submitMode).readNullable[String] and
           (__ \ 'choices).readNullable[List[String]] and
           (__ \ 'fields).lazyReadNullable(implicitly[Reads[List[FieldValueRaw]]]) and //Note: recursiveness here prevents macro use (see JsonParseTestGroup)
-          (__ \ 'mandatory).readNullable[String] and
-          (__ \ 'multivalue).readNullable[String] and
-          (__ \ 'total).readNullable[String] and
-          (__ \ 'international).readNullable[String] and
-          (__ \ 'infoText).readNullable[String] and
-          (__ \ 'infoType).readNullable[String] and
-          (__ \ 'shortName).readNullable[String] and
-          (__ \ 'repeatsMax).readNullable[Int] and
-          (__ \ 'repeatsMin).readNullable[Int] and
-          (__ \ 'repeatLabel).readNullable[String] and
-          (__ \ 'repeatAddAnotherText).readNullable[String]
+          (__ \ 'mandatory).readNullable[String]
         ) (FieldValueRaw.apply _)
     }
 
