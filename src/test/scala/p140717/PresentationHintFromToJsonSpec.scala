@@ -3,16 +3,13 @@ package p270717
 import julienrf.json.derived
 import org.scalatest.{FlatSpec, Matchers}
 import p270717.PresentationHintParser.Opt
-import parseback.LineStream
 import play.api.libs.json.JsValue
 
 
 /** =============================================== */
 
 sealed trait PresentationHint
-
 case object CollapseGroupUnderLabel extends PresentationHint
-
 case object SummariseGroupAsGrid extends PresentationHint
 
 //  implicit val reads: Reads[PresentationHint] = derived.reads() //turn JsValue into PresentationHint
@@ -21,22 +18,14 @@ case object SummariseGroupAsGrid extends PresentationHint
 /** =============================================== */
 
 
-import cats.Eval
-import cats.data.ReaderT
-import cats.instances.either._
-import cats.syntax.either._
-import parseback._
-import parseback.compat.cats._
-import parseback.util.Catenable
-
 sealed trait UnexpectedState extends Product with Serializable
-
 case class InvalidState(errorMsg: String) extends UnexpectedState
-
 case class InvalidStateWithJson(errorMsg: String, json: JsValue) extends UnexpectedState
 
 
 object PresentationHintParser extends ParserUtil {
+
+  import parseback._
 
   type Opt[A] = Either[UnexpectedState, A]
 
@@ -58,7 +47,11 @@ class PresentationHintFromToJsonSpec extends FlatSpec with Matchers {
 
   import play.api.libs.json._
 
+
+
   def toLeftRight[A](result: JsResult[A]): Opt[A] = {
+    import cats.syntax.either._
+
     result match {
       case JsSuccess(a, _) => a.asRight
       case JsError(errors) => InvalidState(errors.map {
@@ -178,7 +171,16 @@ class PresentationHintFromToJsonSpec extends FlatSpec with Matchers {
 
 trait ParserUtil {
 
+  import cats.instances.either._
+  import cats.Eval
+  import parseback.Parser
+  import cats.data.ReaderT
+  import parseback.LineStream
+  import parseback.util.Catenable
+  import parseback.compat.cats._
+
   private def parse[A](parser: Parser[A]) = ReaderT[Opt, String, Catenable[A]] { expression =>
+    import cats.syntax.either._
     parser(LineStream[Eval](expression)).value.leftMap { error =>
       val errors: String = error.map(_.render(expression)).mkString("\n")
       InvalidState(
