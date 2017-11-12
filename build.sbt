@@ -17,6 +17,6 @@ lazy val root = (project in file(".")).
       libraryDependencies += "com.codecommit" %% "parseback-core" % "0.3",
     libraryDependencies += "com.codecommit" %% "parseback-cats" % "0.3",
     libraryDependencies += "org.scalacheck" % "scalacheck_2.12" % "1.13.5" % "test",
-    libraryDependencies += "org.julienrf" % "play-json-derived-codecs_2.12" % "4.0.0"
-
+    libraryDependencies += "org.julienrf" % "play-json-derived-codecs_2.12" % "4.0.0",
+    libraryDependencies += "org.parboiled" %% "parboiled" % "2.1.4"
 )
