@@ -4,6 +4,33 @@ import org.parboiled2._
 
 import scala.util.Try
 
+/**
+  * Parboiled2 Parser
+  *
+  */
+
+/**
+  * Actions("""
+       actions{
+         ACTION_NAME=[ELEMENT,ANOTHER_ELEMENT,SOMETHING_ELSE]
+         ANOTHER_ACTION=[SOMETHING_HERE,ANOTHER_ONE]
+       }""")
+    results in
+
+    Success(Vector(Action(ACTION_NAME,Vector(ELEMENT, ANOTHER_ELEMENT, SOMETHING_ELSE)), Action(ANOTHER_ACTION,Vector(SOMETHING_HERE, ANOTHER_ONE))))
+    while
+
+    Actions(
+      """
+       actions{
+         ACTION_NAME=[ELEMENT,ANOTHER_ELEMENT,SOMETHING_ELSE]
+         ANOTHER_ACTION=[SOMETHING_HERE,AN0THER_ONE]
+       }""")
+    results in
+
+    Failure(ParseError(Position(109,4,39), ...
+  */
+
 object Actions {
   case class Action(name: String, elems: Seq[String])
 
